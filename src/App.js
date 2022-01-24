@@ -40,8 +40,8 @@ function App() {
           flexDirection: "column",
         }}
       >
-        <Typography variant="h3" gutterBottom>
-          Dummy Text
+        <Typography variant="h4" gutterBottom>
+          Dummy Text Generator
         </Typography>
 
         <FormControl
