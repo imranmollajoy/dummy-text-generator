@@ -1,23 +1,110 @@
-import logo from './logo.svg';
-import './App.css';
+import {
+  Container,
+  Typography,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  Button,
+  Stack,
+} from "@mui/material";
+import "./App.css";
+import React, { useEffect } from "react";
 
 function App() {
+  const [paragraphCount, setParagraphCount] = React.useState(1);
+  const [paragraph, setParagraph] = React.useState([]);
+  const [p, setP] = React.useState(1);
+
+  useEffect(() => {
+    var url = `https://hipsum.co/api/?type=hipster-centric&paras=${paragraphCount}`;
+    fetch(url)
+      .then((response) => response.json())
+      .then((data) => {
+        setParagraph(data);
+      });
+  }, [paragraphCount]);
+
+  function handleChange(e) {
+    setParagraphCount(e);
+  }
+
+  const paragraphs = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+      <Container
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          flexDirection: "column",
+        }}
+      >
+        <Typography variant="h3" gutterBottom>
+          Dummy Text
+        </Typography>
+
+        <FormControl
+          fullWidth
+          sx={{
+            marginBottom: "1rem",
+          }}
         >
-          Learn React
-        </a>
-      </header>
+          <InputLabel id="select-label">Paragraph Count</InputLabel>
+          <Select
+            labelId="select-label"
+            id="select"
+            value={p}
+            label="Paragraph Count"
+            onChange={(e) => setP(e.target.value)}
+          >
+            {paragraphs.map((para) => (
+              <MenuItem key={para} value={para}>
+                {para}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+        <Stack alignItems="center" direction="row" gap={4}>
+          <Button
+            variant="contained"
+            color="primary"
+            sx={{
+              marginBottom: "1rem",
+            }}
+            onClick={() => {
+              handleChange(p);
+            }}
+          >
+            Submit
+          </Button>
+          <Button
+            variant="outlined"
+            color="secondary"
+            sx={{
+              marginBottom: "1rem",
+            }}
+            onClick={() => {
+              const copy = paragraph.splice(" ").join("\n");
+              navigator.clipboard
+                .writeText(copy)
+                .then(() => {
+                  alert("successfully copied");
+                })
+                .catch(() => {
+                  alert("something went wrong");
+                });
+            }}
+          >
+            Copy
+          </Button>
+        </Stack>
+        {paragraph.map((para) => (
+          <Typography variant="body1" gutterBottom paragraph>
+            {para}
+          </Typography>
+        ))}
+      </Container>
     </div>
   );
 }
