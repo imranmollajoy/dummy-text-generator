@@ -38,6 +38,7 @@ function App() {
           alignItems: "center",
           justifyContent: "center",
           flexDirection: "column",
+          marginTop: "4rem",
         }}
       >
         <Typography variant="h4" gutterBottom>
@@ -100,7 +101,12 @@ function App() {
           </Button>
         </Stack>
         {paragraph.map((para) => (
-          <Typography variant="body1" gutterBottom paragraph>
+          <Typography
+            variant="body1"
+            gutterBottom
+            paragraph
+            key={para.substring(0, 5)}
+          >
             {para}
           </Typography>
         ))}
