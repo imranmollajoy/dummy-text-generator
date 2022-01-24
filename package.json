@@ -1,5 +1,6 @@
 {
   "name": "dummy-text",
+  "homepage": "https://imranmollajoy.github.io/dummy-text-generator",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
